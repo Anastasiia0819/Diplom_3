@@ -46,3 +46,8 @@ class BasePage:
     #проверка ожидание, пока элемент станет невидимым
     def wait_for_element_invisible(self, locator, timeout=10):
         return WebDriverWait(self.driver, timeout).until(expected_conditions.invisibility_of_element_located(locator))
+
+    #ожидание элемента отличного от изначального (используется в номере заказа)
+    def wait_for_number_change(self, element, initial_number, timeout=30):
+        WebDriverWait(self.driver, timeout).until(
+            lambda driver: element.text != initial_number)

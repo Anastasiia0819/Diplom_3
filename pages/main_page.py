@@ -97,5 +97,8 @@ class MainPage(BasePage):
     def find_number_order(self):
         return self.find_element(MainPageLocators.number_order)
 
-
+# Ожидание обновления номера заказа
+    def wait_for_order_number_to_update(self, initial_order_number):
+        order_number_element = self.find_number_order()  # Найдите элемент с номером заказа
+        self.wait_for_number_change(order_number_element, initial_order_number)
 
