@@ -3,3 +3,5 @@ class Config:
     login_url = 'https://stellarburgers.nomoreparties.site/login'
     forgot_password_url = 'https://stellarburgers.nomoreparties.site/forgot-password'
     reset_password_url = 'https://stellarburgers.nomoreparties.site/reset-password'
+    history_order_url = 'https://stellarburgers.nomoreparties.site/account/order-history'
+    profile_url = "https://stellarburgers.nomoreparties.site/account/profile"

@@ -6,6 +6,8 @@ import pytest
 from selenium import webdriver
 from locators.login_page_locators import LoginPageLocators
 from pages.login_page import LoginPage
+from pages.main_page import MainPage
+import time
 
 """
 @pytest.fixture(params=["chrome", "firefox"], scope="function")
@@ -71,9 +73,12 @@ def create_and_delete_user():
 def login(driver, create_and_delete_user):
     user_data = create_and_delete_user["user_data"]
     login_page = LoginPage(driver)
+    main_page = MainPage(driver)
     login_page.open_login_page()
     login_page.enter_email(user_data["email"])
     login_page.enter_password(user_data["password"])
     login_page.click_login_button()
+    main_page.wait_burgers_page()
+    main_page.wait_personal_account_button()
     assert login_page.get_current_url() == Config.URL
 
