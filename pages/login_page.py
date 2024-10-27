@@ -1,11 +1,3 @@
-"""
-Восстановление пароля
-- переход на страницу восстановления пароля по кнопке «Восстановить пароль»,
-- ввод почты и клик по кнопке «Восстановить»,
-- клик по кнопке показать/скрыть пароль делает поле активным — подсвечивает его.
-https://stellarburgers.nomoreparties.site/login
-"""
-
 from selenium import webdriver
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -47,6 +39,10 @@ class LoginPage(BasePage):
 
     def click_login_button(self):
         self.click_element(LoginPageLocators.login_button)
+
+    #ожидание кнопки Войти
+    def wait_login_button(self):
+        self.wait_for_elements_visible(LoginPageLocators.login_button)
 
 
 

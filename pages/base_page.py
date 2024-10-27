@@ -43,3 +43,6 @@ class BasePage:
     def scroll(self, element):
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
+    #проверка ожидание, пока элемент станет невидимым
+    def wait_for_element_invisible(self, locator, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(expected_conditions.invisibility_of_element_located(locator))

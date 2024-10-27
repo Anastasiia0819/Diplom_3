@@ -17,7 +17,7 @@ class ProfilePage(BasePage):
     #Открытие страницы
     @allure.step('open profile page')
     def open_profile_page(self):
-        self.navigate(Config.profile_url)
+        self.navigate(f"{Config.URL}account/profile")
 
     def get_current_url(self):
         return self.get_current_url_base()
