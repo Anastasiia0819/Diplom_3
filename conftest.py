@@ -4,26 +4,28 @@ import json
 from src.helpers import get_random_data_user
 import pytest
 from selenium import webdriver
-
+from locators.login_page_locators import LoginPageLocators
+from pages.login_page import LoginPage
 
 """
-@pytest.mark.parametrize(params=['chrome', "firefox"])
-#"browser", ["chrome", "firefox"]
-@pytest.fixture
+@pytest.fixture(params=["chrome", "firefox"], scope="function")
 def driver(request):
     browser_name = request.param
     browser = None
+
     if browser_name == "chrome":
         browser = webdriver.Chrome()
     elif browser_name == "firefox":
         browser = webdriver.Firefox()
     else:
-        ValueError("Invalid value")
+        raise ValueError("Invalid value")
+
     browser.maximize_window()
     browser.get(Config.URL)
     yield browser
+
     browser.quit()
-    """
+"""
 
 
 @pytest.fixture
@@ -65,5 +67,13 @@ def create_and_delete_user():
     assert delete_response.status_code == 202, f"Ошибка удаления пользователя, статус: {delete_response.status_code}, текст: {delete_response.text}"
 
 
-
+@pytest.fixture
+def login(driver, create_and_delete_user):
+    user_data = create_and_delete_user["user_data"]
+    login_page = LoginPage(driver)
+    login_page.open_login_page()
+    login_page.enter_email(user_data["email"])
+    login_page.enter_password(user_data["password"])
+    login_page.click_login_button()
+    assert login_page.get_current_url() == Config.URL
 

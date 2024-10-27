@@ -38,6 +38,15 @@ class LoginPage(BasePage):
     def click_recover_password_button(self):
         self.click_element(LoginPageLocators.recover_password_button)
 
+    #LOGIN
+    def enter_email(self, email):
+        self.enter_text(LoginPageLocators.email_field, email)
+
+    def enter_password(self, password):
+        self.enter_text(LoginPageLocators.password_field, password)
+
+    def click_login_button(self):
+        self.click_element(LoginPageLocators.login_button)
 
 
 
