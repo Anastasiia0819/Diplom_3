@@ -2,14 +2,9 @@ import pytest
 from selenium import webdriver
 from src.config import Config
 import allure
-from locators.login_page_locators import LoginPageLocators
-from locators.reset_password_page_locators import ResetPasswordPageLocators
-from locators.forgot_password_page_locators import ForgotPasswordPageLocators
 from pages.login_page import LoginPage
 from pages.forgot_password_page import ForgotPasswordPage
 from pages.reset_password_page import ResetPasswordPage
-import time
-from selenium.webdriver.support import expected_conditions
 
 
 class TestRecoverPassword:

@@ -2,9 +2,6 @@ import pytest
 from selenium import webdriver
 from src.config import Config
 import allure
-from locators.main_page_locators import MainPageLocators
-from locators.main_page_locators import ConstructorLocators
-from locators.feed_page_locators import FeedOrderPageLocators
 from pages.main_page import MainPage
 from pages.feed_page import FeedPage
 

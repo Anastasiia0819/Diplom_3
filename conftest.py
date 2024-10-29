@@ -7,6 +7,7 @@ from selenium import webdriver
 from locators.login_page_locators import LoginPageLocators
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
+from selenium.webdriver import ActionChains
 import time
 
 """
@@ -80,5 +81,50 @@ def login(driver, create_and_delete_user):
     login_page.click_login_button()
     main_page.wait_burgers_page()
     main_page.wait_personal_account_button()
-    assert login_page.get_current_url() == Config.URL
+    assert login_page.get_current_url() == Config.URL, "Авторизация не выполнена"
+
+    # Возвращаем статус успешного логина
+    return True
+
+
+@pytest.fixture()
+def make_order(driver, create_and_delete_user, login):
+    def _make_order():
+        main_page = MainPage(driver)
+        main_page.wait_burgers_page()
+
+        # перенос ингредиента в корзину
+        ingredient = main_page.find_ingredient_bulka()
+        basket = main_page.find_basket()
+        actions = ActionChains(driver)
+        actions.drag_and_drop(ingredient, basket).perform()
+        counter = main_page.find_counter_2()
+        assert counter.is_displayed()
+
+        # клик на Оформить заказ
+        main_page.click_made_order_button()
+
+        # ожидание модальное окно заказа
+        main_page.wait_modal_order()
+
+        # При открытии модалки ожидаем, что номер заказа равен 9999
+        order_number_static = main_page.find_number_order()
+        initial_order_number = "9999"
+        assert order_number_static.text == initial_order_number, "Номер заказа не отображается как '9999' при открытии"
+
+        # ожидание актуального номера заказа, отличного от initial_order_number
+        main_page.wait_for_order_number_to_update(initial_order_number)
+
+        # Проверка, что номер заказа изменился с статичного значения
+        updated_order_number = order_number_static.text
+        assert updated_order_number != initial_order_number, "Номер заказа не обновился на актуальный"
+
+        number_order = main_page.find_number_order()
+        assert updated_order_number is not None
+        assert number_order.is_displayed(), "Номер заказа не отображается в модальном окне"
+        main_page.click_close_button()
+        return updated_order_number
+    return _make_order
+
+
 

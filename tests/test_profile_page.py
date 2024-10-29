@@ -2,9 +2,6 @@ import pytest
 from selenium import webdriver
 from src.config import Config
 import allure
-from locators.main_page_locators import MainPageLocators
-from locators.profile_page_locators import ProfilePageLocators
-from locators.login_page_locators import LoginPageLocators
 from pages.main_page import MainPage
 from pages.profile_page import ProfilePage
 from pages.login_page import LoginPage

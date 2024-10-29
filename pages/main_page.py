@@ -31,6 +31,8 @@ class MainPage(BasePage):
     # клик на кнопку Личный кабинет
     @allure.step('Клик на Личный кабинет')
     def click_personal_account_button(self):
+        self.wait_for_element_visible(MainPageLocators.personal_account_button)
+        self.wait_element_to_be_clickable(MainPageLocators.personal_account_button)
         self.click_element(MainPageLocators.personal_account_button)
 
     # клик на кнопку Конструктор
